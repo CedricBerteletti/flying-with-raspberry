@@ -1,7 +1,12 @@
 # flying-with-raspberry
 Usign a Raspberry Pi Zero 2 for controlling a rocket or a RC plane
 
-## Description
+## flight software
+
+The flight software designed to run on an embeded raspberry in a plane or a rocket.
+
+Present in the 'flight' folder.
+
 ### Launching
 #### On Windows
 
@@ -32,6 +37,8 @@ Creating the Python virtual environment
 ```
 python3 -m venv .venv
 source .venv/bin/activate
+pip3 install fastapi
+pip3 install uvicorn
 ```
 
 Activating the Python virtual environment
