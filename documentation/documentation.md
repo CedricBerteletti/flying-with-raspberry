@@ -54,3 +54,7 @@ Comes with one fully assembled and tested module, a piece of header you can sold
 
 We have a nice fancy library for GPS usage for both Arduino and Python usage. A full tutorial is also available, which has tons of information about the module, how to use the data logger, example code for both CircuitPython & Arduino, and more
 https://learn.adafruit.com/adafruit-mini-gps-pa1010d-module
+
+## Adafruit BNO055 Absolute Orientation Sensor
+https://learn.adafruit.com/adafruit-bno055-absolute-orientation-sensor
+https://docs.circuitpython.org/projects/bno055/en/latest/
