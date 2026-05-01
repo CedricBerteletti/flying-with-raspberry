@@ -1,11 +1,11 @@
 # flying-with-raspberry
 Usign a Raspberry Pi Zero 2 for controlling a rocket or a RC plane
 
-## flight software
+## flight software on the raspberry.
 
 The flight software designed to run on an embeded raspberry in a plane or a rocket.
 
-Present in the 'flight' folder.
+Present in the 'flight-raspberry' folder.
 
 ### Launching
 #### On Windows

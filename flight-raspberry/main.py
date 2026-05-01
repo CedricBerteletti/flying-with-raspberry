@@ -8,11 +8,13 @@ import uvicorn
 from fastapi import FastAPI
 import services.settings as settings
 from controllers.hello_controller import app as hello_router
+from controllers.camera_controller import app as camera_router
 
 app = FastAPI(title="Flying Raspberry API")
 
-# Mount the API router
-app.mount("/hello", hello_router)
+# Mount the API routers
+app.mount("/api/hello", hello_router)
+app.mount("/api/camera", camera_router)
 
 def main(args):
     # Initialize settings and logging
