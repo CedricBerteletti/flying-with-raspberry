@@ -15,6 +15,8 @@ async def take_picture():
     num_picture = 0
     folder = "/home/rasp/flight-pictures/"
     file_name = folder + time_str + "test" + str(num_picture) + ".jpg"
+    if not os.path.exists(folder):
+        os.makedirs(folder)
     os.system("rpicam-still" + " -o " + file_name + " -t 1ms")
 
     return {
