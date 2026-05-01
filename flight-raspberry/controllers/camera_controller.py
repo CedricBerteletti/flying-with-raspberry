@@ -1,5 +1,6 @@
-import os
+import subprocess
 from fastapi import FastAPI
+import datetime
 
 app = FastAPI()
 
@@ -9,7 +10,11 @@ async def root():
 
 @app.post("/pictures")
 async def take_picture():
-    command = "rpicam-still -0 test.jpg -t 1ms"
-    os.system(command)
+    time_format = "%Y-%m-%dT%H:%M:%S%z"
+    time_str = datetime.date.today().strftime(time_format)
+    num_picture = 0
+    folder = "/home/rasp/flight-pictures/"
+    file_name = "{folder}{time_str}test{num_picture}.jpg"
+    subprocess.run(["rpicam-still", "-o {file_name}", "-t 1ms"])
 
-    return {"file_name": "test.jpg"}
+    return {"file_name": file_name}
