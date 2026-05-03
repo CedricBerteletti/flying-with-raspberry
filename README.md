@@ -39,6 +39,7 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip3 install fastapi
 pip3 install uvicorn
+pip3 install opencv-python
 ```
 
 Activating the Python virtual environment
