@@ -27,7 +27,7 @@ Activating the Python virtual environment
 Launching
 
 ```
-python main.py
+python flight.py
 ```
 
 #### On Linux
@@ -50,5 +50,5 @@ source .venv/bin/activate
 Launching
 
 ```
-python3 main.py
+python3 flight.py
 ```

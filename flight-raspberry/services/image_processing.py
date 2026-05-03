@@ -1,23 +1,25 @@
 from services.singleton import SingletonMeta
 import services.settings as settings
 import datetime
+import os
 
 
-TIME_FORMAT = settings.get("time.format")
-FOLDER = settings.get("pictures.folder")
-PICTURES_NAME = settings.get("pictures.name")
 
 class ImageProcessing(metaclass=SingletonMeta):
 
-    num_picture = 0
+    def __init__(self):
+        self.num_picture = 0
+        self.TIME_FORMAT = settings.get("time.format")
+        self.FOLDER = settings.get("pictures.folder")
+        self.PICTURES_NAME = settings.get("pictures.name")
 
-    def take_picture():
-        time_str = datetime.date.today().strftime(TIME_FORMAT)
-        num_picture = num_picture + 1
-        file_name = f"{FOLDER}{time_str}-{PICTURES_NAME}-{str(num_picture)}.jpg"
-        if not os.path.exists(FOLDER):
-            os.makedirs(FOLDER)
-        os.system("rpicam-still" + " -o " + file_name + " -t 1ms")
+    def take_picture(self):
+        time_str = datetime.date.today().strftime(self.TIME_FORMAT)
+        self.num_picture = self.num_picture + 1
+        file_name = f"{self.FOLDER}{time_str}-{self.PICTURES_NAME}-{str(self.num_picture)}.jpg"
+        if not os.path.exists(self.FOLDER):
+            os.makedirs(self.FOLDER)
+        os.system(f"rpicam-still -o {file_name} -t 1ms")
         
-        return num_picture, file_name
+        return self.num_picture, file_name
 

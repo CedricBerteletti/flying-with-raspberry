@@ -1,4 +1,3 @@
-import os
 from fastapi import FastAPI
 from services.image_processing import ImageProcessing
 app = FastAPI()
