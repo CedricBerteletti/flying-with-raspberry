@@ -6,14 +6,14 @@ app = FastAPI()
 async def root():
     return {"message": "Camera module"}
 
+@app.get("/pictures/latest")
+async def get_picture():
+    return ImageProcessing().get_picture(ImageProcessing().get_last_picture_id())
+
 @app.get("/pictures/{id}")
 async def get_picture(id: int):
     picture = ImageProcessing().get_picture(id)
     return {"image": picture}
-
-@app.get("/pictures/latest")
-async def get_picture():
-    return  get_picture(ImageProcessing().num_picture)
 
 @app.post("/pictures")
 async def take_picture():
