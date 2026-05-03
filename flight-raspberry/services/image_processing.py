@@ -16,10 +16,21 @@ class ImageProcessing(metaclass=SingletonMeta):
     def take_picture(self):
         time_str = datetime.date.today().strftime(self.TIME_FORMAT)
         self.num_picture = self.num_picture + 1
+
         file_name = f"{self.FOLDER}{time_str}-{self.PICTURES_NAME}-{str(self.num_picture)}.jpg"
         if not os.path.exists(self.FOLDER):
             os.makedirs(self.FOLDER)
         os.system(f"rpicam-still -o {file_name} -t 1ms")
         
         return self.num_picture, file_name
+    
+    def get_picture(self, id):
+        target_suffix = f"-{self.PICTURES_NAME}-{str(id)}.jpg"
+        
+        if os.path.exists(self.FOLDER):
+            for file in os.listdir(self.FOLDER):
+                if file.endswith(target_suffix):
+                    return os.path.join(self.FOLDER, file)
+        
+        return None
 
