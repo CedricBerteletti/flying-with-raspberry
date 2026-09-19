@@ -2,7 +2,31 @@
 
 ## Raspberry Pi Zero 2
 
-Pin header 2x20 2,54mm
+## Pin header 2x20 2,54mm
+
+STEMMA 4-Pin I2C (both standard & STEMMA QT)
+
+This connector is for I2C devices and has a 4 pin connector
+
+For JST PH (2mm pitch) the pin order is
+
+```
+Green for SCL
+White for SDA
+Red for V+
+Black for GND
+```
+
+For the STEMMA QT cables, we follow the Qwiic convention:
+
+```
+Black for GND
+Red for V+
+Blue for SDA
+Yellow for SCL
+```
+
+Note the colors are slightly different for SDA/SCL but the pin order is the same
 
 
 ## Adafruit 9-DOF Absolute Orientation IMU Fusion Breakout - BNO055 - STEMMA QT / Qwiic
@@ -59,3 +83,4 @@ https://learn.adafruit.com/adafruit-mini-gps-pa1010d-module
 ## Adafruit BNO055 Absolute Orientation Sensor
 https://learn.adafruit.com/adafruit-bno055-absolute-orientation-sensor
 https://docs.circuitpython.org/projects/bno055/en/latest/
+
