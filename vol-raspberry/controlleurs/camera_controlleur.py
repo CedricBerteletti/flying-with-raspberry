@@ -1,27 +1,27 @@
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
-from services.image_processing import ImageProcessing
+from services.traitement_image import TraitementImage
 
 app = FastAPI()
 
 @app.get("/")
 async def root():
-    return {"message": "Camera module"}
+    return {"message": "Module caméra"}
 
-@app.get("/pictures/latest")
+@app.get("/images/derniere")
 async def get_picture():
-    file_name = ImageProcessing().get_picture(ImageProcessing().get_last_picture_id())
+    file_name = TraitementImage().get_image(TraitementImage().get_id_derniere_image())
     return FileResponse(file_name, media_type="image/jpeg")
 
-@app.get("/pictures/{id}")
+@app.get("/images/{id}")
 async def get_picture(id: int):
-    file_name = ImageProcessing().get_picture(id)
+    file_name = TraitementImage().get_image(id)
     return FileResponse(file_name, media_type="image/jpeg")
 
-@app.post("/pictures")
+@app.post("/images")
 async def take_picture():
 
-    num_picture, file_name = ImageProcessing().take_picture()
+    num_picture, file_name = TraitementImage().prend_photo()
 
     return {
         "id": num_picture,
