@@ -1,42 +1,48 @@
+// @author: Cédric BERTELETTI
+// @author: Ulysse BERTELETTI
 
 include <BOSL2/std.scad>
 include <BOSL2/nurbs.scad>
-
-// Taille de l'aile et pas d'intégration
-longueur = 1000;
-largeur = 700;
-hauteur = 120;
-pas_integration = 1;
-nb_pas = longueur/pas_integration;
+include <parametres.scad>
 
 
 module profil_aile() {
-    //cube([pas_integration, largeur, hauteur], center=false);
-    tab_profil = [[0, 0],
-        [0, hauteur],
-        [largeur, hauteur],
-        [largeur, 0]];
+    //cube([pas_integration, aile_largeur, aile_hauteur], center=false);
+    tab_profil = [
+        // Profil inférieur
+        [0, 0.1*aile_hauteur],
+        [-0.1*aile_largeur, 0],
+        [-0.3*aile_largeur, 0.3*aile_hauteur],
+        [-0.9*aile_largeur, 0],
+        [-aile_largeur, 0],
+        // Profil supérieur
+        [-0.5*aile_largeur, 0.9*aile_hauteur],
+        [-0.25*aile_largeur, aile_hauteur],
+        [-0.1*aile_largeur, aile_hauteur*0.85],
+        ];
     profil = nurbs_curve(tab_profil, 2, type="closed");
-    rotate([90, 0, 90])
-        linear_extrude(height = 10, center = true)
-            polygon(profil);
+    translate([0, aile_largeur, 0])
+        rotate([90, 0, 90])
+            linear_extrude(height = pas_integration, center = true)
+                polygon(profil);
 }
 
 
 // Points de parcours des nurbs
-u = [ for (i = [0 : nb_pas*2]) i/longueur/2 ];
+u = [ for (i = [0 : nb_pas*2]) i/(nb_pas*2) ];
 
 
-// Évolution de l'échelle verticale (hauteur) de l'aile le long de l'extrusion
+// Évolution de l'échelle verticale (aile_hauteur) de l'aile le long de l'extrusion
 
 tab_echelle_z = [[0, 1.0],
 [0.05, 0.95],
 [0.15, 0.6],
-[0.25, 0.6],
-[0.30, 0.8],
-[0.35, 0.5],
-[0.4, 0.3],
+[moteur_position_relative-0.05, 0.6],
+[moteur_position_relative, 0.8],
+[moteur_position_relative+0.05, 0.5],
+[moteur_position_relative+0.1, 0.3],
 [0.8, 0.1],
+[0.95, 0.09],
 [1.0, 0]];
 
 courbe_echelle_z = nurbs_curve(tab_echelle_z,2,u=u);
@@ -51,14 +57,14 @@ pts = nurbs_curve(control,2,u=[0.537]);
 //color("red")move_copies(pts) circle(r=1.5,$fn=16);
 
 
-// Évolution de l'échelle horizontale (largeur) de l'aile le long de l'extrusion
+// Évolution de l'échelle horizontale (aile_largeur) de l'aile le long de l'extrusion
 
 tab_echelle_y = [[0, 1.0],
 [0.05, 1.05],
 [0.15, 0.85],
-[0.25, 0.93],
-[0.30, 0.95],
-[0.35, 0.93],
+[moteur_position_relative-0.05, 0.93],
+[moteur_position_relative, 0.95],
+[moteur_position_relative+0.05, 0.93],
 [1.0, 0.5]];
 
 courbe_echelle_y = nurbs_curve(tab_echelle_y,2,u=u);
@@ -79,18 +85,12 @@ function point_plus_proche(courbe, x, i=0, meilleur=undef) =
     );
 
 
-// Permet d'avoir une vue éclatée de l'aile pour visualiser les différentes sections
-eclate = 0;
-
-
-module wing() {
+module moitie () {
     union() {
         for (i = [0 : nb_pas - 1]) {
             index = i/nb_pas;
 
-            //translate([i * (pas_integration+eclate), -largeur*facteur_y/2, 0])
-            translate([i * (pas_integration+eclate), -i/2, 0])
-                //scale([1, facteur_y, facteur_z])
+            translate([i * (pas_integration+eclate), -index*aile_largeur/2, 0])
                 scale([1,
                     point_plus_proche(courbe_echelle_y, index)[1],
                     point_plus_proche(courbe_echelle_z, index)[1]])
@@ -99,12 +99,17 @@ module wing() {
     }
 }
 
+module corps () {
+    union() {
+        moitie();
+        mirror([1,0,0]) moitie();
+    }
+}
+
 
 //profil_aile();
 
-wing();
-mirror([1,0,0]) wing();
-
+//corps();
 
 
 

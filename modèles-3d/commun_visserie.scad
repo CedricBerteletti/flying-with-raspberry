@@ -1,3 +1,5 @@
+// @author: Cédric BERTELETTI
+
 
 module m2_trou_vis(hauteur=10) {
     cylinder(h=hauteur, r1=1, r2=1, center=true, $fn=30);
