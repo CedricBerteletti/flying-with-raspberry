@@ -4,4 +4,3 @@ __pycache__/
 *.pyo
 *.pyd
 modèles-3d/aile-volante/aile_8pc.gcode
-modèles-3d/aile-volante/integre.stl
